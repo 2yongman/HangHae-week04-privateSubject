@@ -24,28 +24,53 @@
                 box.style.display = "none";
             }
         }
+        // function createid() {
+        //     let id = document.querySelector('#id');
+        //     let pw = document.querySelector('#pw');
+        //     let rpw = document.querySelector('#rpw');
+        //
+        //     if (id.value == pw.value) {
+        //         alert('password와 ID는 동일하면 안됩니다.')
+        //         return;
+        //     }
+        //     if (pw.value !== rpw.value) {
+        //         alert('비밀번호가 맞지 않습니다.')
+        //         return;
+        //     }
+        //     if (confirm("회원가입을 하시겠습니까?")) {
+        //         alert("회원가입을 축하합니다")
+        //         return true;
+        //     }
+        // }
+
+
+
     </script>
 </head>
 <body>
 <div id="login-form">
     <div id="login-title">항해 5기 게시판</div>
 
-    <form action="/user/signup" method="post">
+    <form th:action="@{/user/signup}" method="post">
         <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="Username" class="login-input-box">
+        <input type="text" name="username" id="id" placeholder="Username" class="login-input-box">
+        <!--/*@thymesVar id="valid_username" type=""*/-->
+        <span th:style="${'color:red; font-size:9px;'}" th:text="${valid_username}"></span>
 
         <div class="login-id-label">Password</div>
-        <input type="password" name="password" class="login-input-box">
+        <input type="password" name="password" id="pw" class="login-input-box">
+        <!--/*@thymesVar id="valid_password" type=""*/-->
+        <span th:style="${'color : red; font-size:9px;'}" th:text="${valid_password}"></span>
 
-        <div class="login-id-label">re_password</div>
-        <input type="text" name="email" placeholder="E-mail" class="login-input-box">
+        <div class="login-id-label">Check_password</div>
+        <input type="password" name="email" id="rpw" placeholder="Check_password" class="login-input-box">
 
         <div>
             <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
             <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box"
                    style="display:none">
         </div>
-        <button id="login-id-submit">회원 가입</button>
+        <button id="login-id-submit" onclick="createid()">회원 가입</button>
     </form>
 </div>
 </body>
