@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>게시판 글작성</title>
+</head>
+
+<script>
+    function boardWrite() {
+        let contents = $('#contents').val();
+        let title = $('#title').val();
+        let username = $('#username').val();
+
+        let data = {'title': title, 'contents': contents, 'username': username};
+
+        $.ajax({
+            type: "POST",
+            url: "/api/boards",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                alert('작성 완료');
+                window.location.href = "index.html";
+            }
+        });
+    }
+</script>
+
+<body>
+<div class="layout">
+    제목 : <input type="text" id="title">
+    <p>
+        내용 : <textarea id="contents"></textarea>
+    </p>
+    <p>
+        이름 : <textarea id="username"></textarea>
+    </p>
+    <button onclick="boardWrite()">작성</button>
+</div>
+</body>
+</html>

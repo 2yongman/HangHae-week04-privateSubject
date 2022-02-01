@@ -28,6 +28,9 @@ public class UserController {
         return "login";
     }
 
+    //로그인 후 메인페이지 요청
+
+
     // 회원 가입 페이지
     @GetMapping("/user/signup")
     public String signup() {
@@ -48,6 +51,10 @@ public class UserController {
             }
             return "signup";
         }
+        //회원가입 중복 검사
+//        if(){
+//
+//        }
         userService.registerUser(requestDto);
         return "redirect:/user/login";
     }

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 메인페이지</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    caption {
+        display: none;
+    }
+
+    .board_list_wrap {
+        padding: 50px;
+    }
+
+    .board_list {
+        width: 100%;
+        border-top: 2px solid navy;
+    }
+
+    .board_list {
+        width: 100%
+    }
+
+    .board_list tr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .board_list th,
+    .board_list td {
+        padding: 10px;
+        border: 1px solid #999;
+        font-size: 14px;
+    }
+
+    .board_list td {
+        text-align: center;
+    }
+
+    .board_list .tit {
+        text-align: center;
+    }
+
+    .board_list .tit:hover {
+        text-decoration: underline;
+        text-align: center;
+    }
+
+    .board_list_wrap .paging {
+        margin-top: 25px;
+        font-size: 0;
+        text-align: center;
+    }
+
+    .board_list_wrap .paging a {
+        border: 1px solid #000;
+        margin-left: 10px;
+        display: inline-block;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 100px;
+    }
+
+    .board_list_wrap .paging a:first-child {
+
+    }
+
+    .btn-sm {
+        background: cornflowerblue;
+        border-color: white;
+        border-radius: 10px;
+        color: white;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+</style>
+
+<script>
+    function boardWrite() {
+        let contents = $('#contents').val();
+        let title = $('#title').val();
+        let username = $('#username').val();
+
+        let data = {'title': title, 'contents': contents, 'username': username};
+
+        $.ajax({
+            type: "POST",
+            url: "/api/boards",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                alert('작성 완료');
+                window.location.reload();
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        // HTML 문서를 로드할 때마다 실행합니다.
+        getboards();
+    })
+
+    function getboards() {
+        // 1. 기존 메모 내용을 지웁니다.
+        $('#1board').empty();
+        $('#2board').empty();
+        $('#3board').empty();
+        // $('#cards-box').empty();
+        // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+        $.ajax({
+            type: 'GET',
+            url: '/api/boards',
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    let board = response[i];
+                    let id = board.id;
+                    let username = board.username;
+                    let contents = board.contents;
+                    let title = board.title;
+                    let modifiedAt = board.modifiedAt;
+                    addHTML(id, username, contents, title, modifiedAt);
+                }
+            }
+        })
+    }
+
+    function addHTML(id, username, contents, title, modifiedAt) {
+        let tempHtml = `<tr>
+                            <td class="tit">
+                                <a href="detail.html?id=${id}">${title}</a>
+                            </td>
+                            <td>${username}</td>
+                            <td>${modifiedAt}</td>
+                            <td><a href="#"></a>
+                            <img onclick="deleteboard('${id}')"  alt="" src="https://cdn-icons-png.flaticon.com/512/3208/3208702.png" width="3%"
+                                                     height="3%"></src></td>
+                        </tr>`
+        $('#board-all').append(tempHtml);
+    }
+
+
+    function deleteboard(id) {
+        console.log(id)
+        $.ajax({
+            type: "DELETE",
+            url: `/api/boards/${id}`,
+            success: function (response) {
+                alert('메시지 삭제에 성공하였습니다.');
+                window.location.reload();
+            }
+        })
+    }
+
+</script>
+
+<body>
+<div class="board_list_wrap">
+    <table class="board_list">
+        <caption>게시판 목록</caption>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>작성일</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="board-all">
+        <tr id="1board">
+            <td class="tit">
+                <a href="#">코딩은 쉽다?</a>
+            </td>
+            <td>관리자</td>
+            <td>2022-01-24</td>
+            <td>삭제</td>
+        </tr>
+        <tr id="2board">
+            <td class="tit">
+                <a href="#">항해5기 이용만 게시판</a>
+            </td>
+            <td>관리자</td>
+            <td>2022-01-24</td>
+            <td>삭제</td>
+        </tr>
+        <tr id="3board">
+            <td class="tit">
+                <a href="#">항해7기 모집</a>
+            </td>
+            <td>관리자</td>
+            <td>2022-01-24</td>
+            <td>삭제</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="paging">
+        <a href="#" class="bt">첫 페이지로</a>
+        <a href="#" class="bt">이동 페이지로</a>
+        <a href="#" class="num">1</a>
+        <a href="#" class="num">2</a>
+        <a href="#" class="num">3</a>
+        <a href="#" class="bt">다음 페이지로</a>
+        <a href="#" class="bt">마지막 페이지로</a>
+    </div>
+
+    <p>
+        <button type="button" class="btn-sm" onclick="location.href='/boardwrite.html'">게시글 작성</button>
+    </p>
+
+
+
+</div>
+</body>
+</html>

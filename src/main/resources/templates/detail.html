@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상세페이지</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<script>
+
+
+    function getURLParams(url) {
+        var result = {};
+        url.replace(/[?&]{1}([^=&#]+)=([^&#]*)/g, function (s, k, v) {
+            result[k] = decodeURIComponent(v);
+        });
+        return result;
+    }
+
+    function detailboard() {
+        const id = getURLParams(window.location.href)['id'];
+        $.ajax({
+            type: 'GET',
+            url: `/api/boards/${id}`,
+            success: function (response) {
+                let board = response;
+                addHTML(board.id, board.username, board.contents, board.username);
+            }
+        })
+    }
+
+    function addHTML(id, title, contents, username) {
+        let temphtml = `<div>
+                            <p onclick="detailboard()">제목 : ${title}</p>
+                            <hr>
+                            <p> 내용 : ${contents}</p>
+                            <hr>
+                            <p> 작성자 : ${username}</p>
+                        </div>`
+        $('#wrap').append(temphtml);
+
+    }
+
+    $(document).ready(function () {
+        // HTML 문서를 로드할 때마다 실행합니다.
+        detailboard();
+    })
+
+    function gohome() {
+        window.location.href = "index.html";
+    }
+
+
+</script>
+
+<body>
+<div id="wrap">
+
+</div>
+<button type="button" class="btn btn-info" onclick="gohome()">목록</button>
+
+</body>
+</html>
