@@ -1,5 +1,6 @@
 package com.sparta.wekk043thproject.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.wekk043thproject.dto.SignupRequestDto;
 import com.sparta.wekk043thproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -61,5 +63,12 @@ public class UserController {
         }
         userService.registerUser(requestDto);
         return "redirect:/user/login";
+    }
+    //카카오 로그인
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        //서비스에게 로그인 처리 요청
+        userService.kakaoLogin(code);
+        return "redirect:/";
     }
 }
