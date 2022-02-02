@@ -23,7 +23,6 @@ public class BoardController {
 
     }
 
-
     @GetMapping("/api/boards")
     public List<Board> getMemos() {
         return boardRepository.findAllByOrderByModifiedAtDesc();

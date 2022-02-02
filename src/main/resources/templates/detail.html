@@ -12,7 +12,9 @@
 
     function getURLParams(url) {
         var result = {};
-        url.replace(/[?&]{1}([^=&#]+)=([^&#]*)/g, function(s, k, v) { result[k] = decodeURIComponent(v); });
+        url.replace(/[?&]{1}([^=&#]+)=([^&#]*)/g, function (s, k, v) {
+            result[k] = decodeURIComponent(v);
+        });
         return result;
     }
 
@@ -45,18 +47,57 @@
         detailboard();
     })
 
-    function gohome(){
+    function gohome() {
         window.location.href = "index.html";
     }
+
+    //댓글 작성 ajax
+    function writereply(){
+            let contents = $('#contents').val();
+
+            let data = {'contents': contents};
+
+            $.ajax({
+                type: "POST",
+                url: "/api/reply",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    alert('작성 완료');
+                    window.location.reload();
+                }
+            });
+        }
 
 
 </script>
 
 <body>
 <div id="wrap">
-
 </div>
-<button type="button" class="btn btn-info" onclick="gohome()">목록</button>
+<thead>
+<tr>
+    <th scope="col">작성자</th>
+    <th scope="col">댓글 내용</th>
+    <th scope="col">작성 시간</th>
+</tr>
 
+<p>
+<input id="contents" type="text" placeholder="댓글을 입력해주세요.">
+<button onclick="writereply()">남기기</button>
+</p>
+
+</thead>
+<tbody id="reviews-box">
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+</tbody>
+<p>
+<button type="button" class="btn btn-info" onclick="location.href='/'">목록</button>
+</p>
 </body>
 </html>

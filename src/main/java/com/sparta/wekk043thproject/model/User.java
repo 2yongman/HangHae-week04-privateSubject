@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.management.relation.Relation;
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -27,7 +29,6 @@ public class User {
 
     @Column(unique = true)
     private Long kakaoId;
-
 
     public User(String username, String password) {
         this.username = username;
