@@ -1,6 +1,5 @@
 package com.sparta.wekk043thproject.controller;
 
-
 import com.sparta.wekk043thproject.dto.BoardRequestDto;
 import com.sparta.wekk043thproject.model.Board;
 import com.sparta.wekk043thproject.repository.BoardRepository;
@@ -21,7 +20,9 @@ public class BoardController {
     public Board createBoard(@RequestBody BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         return boardRepository.save(board);
+
     }
+
 
     @GetMapping("/api/boards")
     public List<Board> getMemos() {

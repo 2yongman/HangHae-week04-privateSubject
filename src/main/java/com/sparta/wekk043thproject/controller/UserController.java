@@ -3,6 +3,8 @@ package com.sparta.wekk043thproject.controller;
 import com.sparta.wekk043thproject.dto.SignupRequestDto;
 import com.sparta.wekk043thproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -25,15 +27,21 @@ public class UserController {
     // 회원 로그인 페이지
     @GetMapping("/user/login")
     public String login() {
+
         return "login";
     }
 
-    //로그인 후 메인페이지 요청
+    //메인페이지
+    @GetMapping("/user/index2")
+    public String Board(){
 
+        return "index2";
+    }
 
     // 회원 가입 페이지
     @GetMapping("/user/signup")
     public String signup() {
+
         return "signup";
     }
 
@@ -51,10 +59,6 @@ public class UserController {
             }
             return "signup";
         }
-        //회원가입 중복 검사
-//        if(){
-//
-//        }
         userService.registerUser(requestDto);
         return "redirect:/user/login";
     }

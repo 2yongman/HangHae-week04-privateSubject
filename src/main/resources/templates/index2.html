@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -140,7 +141,7 @@
     function addHTML(id, username, contents, title, modifiedAt) {
         let tempHtml = `<tr>
                             <td class="tit">
-                                <a href="detail.html?id=${id}">${title}</a>
+                                <a href="/Board/detail?id=${id}">${title}</a>
                             </td>
                             <td>${username}</td>
                             <td>${modifiedAt}</td>
@@ -167,60 +168,68 @@
 </script>
 
 <body>
-<div class="board_list_wrap">
-    <table class="board_list">
-        <caption>게시판 목록</caption>
-        <thead>
-        <tr>
-            <th>제목</th>
-            <th>글쓴이</th>
-            <th>작성일</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody id="board-all">
-        <tr id="1board">
-            <td class="tit">
-                <a href="#">코딩은 쉽다?</a>
-            </td>
-            <td>관리자</td>
-            <td>2022-01-24</td>
-            <td>삭제</td>
-        </tr>
-        <tr id="2board">
-            <td class="tit">
-                <a href="#">항해5기 이용만 게시판</a>
-            </td>
-            <td>관리자</td>
-            <td>2022-01-24</td>
-            <td>삭제</td>
-        </tr>
-        <tr id="3board">
-            <td class="tit">
-                <a href="#">항해7기 모집</a>
-            </td>
-            <td>관리자</td>
-            <td>2022-01-24</td>
-            <td>삭제</td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="paging">
-        <a href="#" class="bt">첫 페이지로</a>
-        <a href="#" class="bt">이동 페이지로</a>
-        <a href="#" class="num">1</a>
-        <a href="#" class="num">2</a>
-        <a href="#" class="num">3</a>
-        <a href="#" class="bt">다음 페이지로</a>
-        <a href="#" class="bt">마지막 페이지로</a>
+<div class="header" style="position: relative;">
+    <div id="header-title-login-user">
+        <span th:text="${username}"></span>님의 게시판
     </div>
+    <div class="board_list_wrap">
+        <table class="board_list">
+            <caption>게시판 목록</caption>
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>작성일</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="board-all">
+            <tr id="1board">
+                <td class="tit">
+                    <a href="#">코딩은 쉽다?</a>
+                </td>
+                <td>관리자</td>
+                <td>2022-01-24</td>
+                <td>삭제</td>
+            </tr>
+            <tr id="2board">
+                <td class="tit">
+                    <a href="#">항해5기 이용만 게시판</a>
+                </td>
+                <td>관리자</td>
+                <td>2022-01-24</td>
+                <td>삭제</td>
+            </tr>
+            <tr id="3board">
+                <td class="tit">
+                    <a href="#">항해7기 모집</a>
+                </td>
+                <td>관리자</td>
+                <td>2022-01-24</td>
+                <td>삭제</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="paging">
+            <a href="#" class="bt">첫 페이지로</a>
+            <a href="#" class="bt">이동 페이지로</a>
+            <a href="#" class="num">1</a>
+            <a href="#" class="num">2</a>
+            <a href="#" class="num">3</a>
+            <a href="#" class="bt">다음 페이지로</a>
+            <a href="#" class="bt">마지막 페이지로</a>
+        </div>
 
-    <p>
-        <button type="button" class="btn-sm" onclick="location.href='/boardwrite.html'">게시글 작성</button>
-    </p>
+        <p>
+            <button type="button" class="btn-sm" onclick="location.href='/Board/write'">게시글 작성</button>
+        </p>
 
+        <form id="my_form" method="post" action="/user/logout">
+            <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();"> 로그아웃</a>
+        </form>
 
-
+    </div>
 </div>
+
 </body>
 </html>
