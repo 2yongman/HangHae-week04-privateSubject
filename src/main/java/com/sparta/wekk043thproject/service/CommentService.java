@@ -17,7 +17,7 @@ public class CommentService {
     @Transactional
     public Long update(Long id, CommentRequestDto requestDto){
         Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("댓글 내용을 채워주세요.")
+                () -> new IllegalArgumentException("수정 할 댓글 내용을 채워주세요.")
         );
         comment.update(requestDto);
         return comment.getId();

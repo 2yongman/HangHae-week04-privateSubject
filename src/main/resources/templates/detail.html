@@ -69,6 +69,7 @@
                                     <th>${id}</th>
                                     <th>${comment}</th>
                                     <th>${modifiedAt}</th>
+                                    <th><button onclick="deletecomment('${id}')">삭제</button></th>
                                 </tr>
                             </div>
                         </div> `;
@@ -78,7 +79,7 @@
         })
     }
 
-    //댓글 작성 ajax
+    //댓글 작성
     function writecomment() {
         const id = getURLParams(window.location.href)['id'];
 
@@ -98,6 +99,24 @@
         });
     }
 
+    //댓글 수정
+    function updatecomment(id){
+        
+    }
+
+
+    //댓글 삭제
+    function deletecomment(id) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/comments/${id}`,
+            success: function (response) {
+                alert('메시지 삭제에 성공하였습니다.');
+                window.location.reload();
+            }
+        })
+    }
+
 
 </script>
 
@@ -115,7 +134,8 @@
         <tr>
             <th>용만</th>
             <th>스프링은 봄?</th>
-            <th>23시</th>
+            <th>23:00</th>
+            <th><button>삭제</button></th>
         </tr>
     </div>
 </div>
