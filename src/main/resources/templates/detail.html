@@ -8,7 +8,11 @@
 </head>
 
 <script>
-
+    $(document).ready(function () {
+        // HTML 문서를 로드할 때마다 실행합니다.
+        detailboard();
+        showcomment();
+    })
 
     function getURLParams(url) {
         var result = {};
@@ -39,36 +43,60 @@
                             <p> 작성자 : ${username}</p>
                         </div>`
         $('#wrap').append(temphtml);
-
     }
 
-    $(document).ready(function () {
-        // HTML 문서를 로드할 때마다 실행합니다.
-        detailboard();
-    })
 
-    function gohome() {
-        window.location.href = "index.html";
+    //댓글 보이기
+    function showcomment() {
+        const id = getURLParams(window.location.href)['id'];
+        // 1. 기존 메모 내용을 지웁니다.
+        $('#comment_wrap').empty();
+        // $('#1board').empty();
+        // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+        $.ajax({
+            type: 'GET',
+            url: `/api/comments/${id}`, //변수가 변하는 값이면 백틱을 쓴다.
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    let total = response[i];
+                    let id = total.id;
+                    let comment = total.comment;
+                    let modifiedAt = total.modifiedAt;
+                    // console.log(id, comment, modifiedAt);
+                    let temp_html = `<div id="please">
+                            <div>
+                                <tr>
+                                    <th>${id}</th>
+                                    <th>${comment}</th>
+                                    <th>${modifiedAt}</th>
+                                </tr>
+                            </div>
+                        </div> `;
+                    $('#please').append(temp_html);
+                }
+            }
+        })
     }
 
     //댓글 작성 ajax
-    function writereply(){
-            let contents = $('#contents').val();
+    function writecomment() {
+        const id = getURLParams(window.location.href)['id'];
 
-            let data = {'contents': contents};
+        let comment = $('#comment').val();
 
-            $.ajax({
-                type: "POST",
-                url: "/api/reply",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (response) {
-                    console.log(response)
-                    alert('작성 완료');
-                    window.location.reload();
-                }
-            });
-        }
+        let data = {'comment': comment, 'commentid': id};
+
+        $.ajax({
+            type: "POST",
+            url: "/api/comments",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                alert('작성 완료');
+                window.location.reload();
+            }
+        });
+    }
 
 
 </script>
@@ -82,10 +110,18 @@
     <th scope="col">댓글 내용</th>
     <th scope="col">작성 시간</th>
 </tr>
-
+<div id="please">
+    <div>
+        <tr>
+            <th>용만</th>
+            <th>스프링은 봄?</th>
+            <th>23시</th>
+        </tr>
+    </div>
+</div>
 <p>
-<input id="contents" type="text" placeholder="댓글을 입력해주세요.">
-<button onclick="writereply()">남기기</button>
+    <input id="comment" type="text" placeholder="댓글을 입력해주세요.">
+    <button onclick="writecomment()">남기기</button>
 </p>
 
 </thead>
@@ -97,7 +133,7 @@
 </tr>
 </tbody>
 <p>
-<button type="button" class="btn btn-info" onclick="location.href='/'">목록</button>
+    <button type="button" class="btn btn-info" onclick="location.href='/'">목록</button>
 </p>
 </body>
 </html>

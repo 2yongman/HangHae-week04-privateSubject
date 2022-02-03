@@ -20,7 +20,7 @@ public class HomeController {
         return "boardwrite";
     }
 
-    //게시글 세부 페이지 넘어각
+    //게시글 세부 페이지 넘어가기
     @GetMapping("/Board/detail")
     public String detail(){
         return "detail";

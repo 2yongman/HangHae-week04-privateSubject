@@ -16,17 +16,23 @@ public class Comment extends Timestamped{
     private Long id;
 
     @Column(nullable = false)
+    private Long commentid;
+
+    @Column(nullable = false)
     private String comment;
 
-    public Comment(String comment){
+    public Comment(Long commentid,String comment){
+        this.commentid = commentid;
         this.comment = comment;
     }
 
     public Comment(CommentRequestDto requestDto){
+        this.commentid = requestDto.getCommentid();
         this.comment = requestDto.getComment();
     }
 
     public Long update(CommentRequestDto requestDto){
+        this.commentid = requestDto.getCommentid();
         this.comment = requestDto.getComment();
         return id;
     }

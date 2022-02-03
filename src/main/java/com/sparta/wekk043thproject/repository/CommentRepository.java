@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByOrderByModifiedAtDesc();
+     List<Comment> findAllByCommentidOrderByCreatedAtDesc(Long commentid);
     //findAllByOrderByModifiedAtDesc : 다 찾고 수정된 날짜 기준으로 정렬을 해줘.
 }

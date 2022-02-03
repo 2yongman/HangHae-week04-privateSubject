@@ -19,16 +19,21 @@ public class CommentController {
     private final CommentService commentService;
 
     //댓글 생성하기
-    @PostMapping("api/comments")
+    @PostMapping("/api/comments")
     public Comment createComment(@RequestBody CommentRequestDto requestDto){
         Comment comment = new Comment(requestDto);
         return commentRepository.save(comment);
     }
     //댓글 조회하기 -> @Controller로 들어갈 수 있음.
-    @GetMapping("/api/comments")
-    public List<Comment> readComment(){
-        return commentRepository.findAllByOrderByModifiedAtDesc();
+    @GetMapping("/api/comments/{commentid}")
+    public List<Comment> readComment(@PathVariable Long commentid){
+        return commentRepository.findAllByCommentidOrderByCreatedAtDesc(commentid);
     }
+
+    //@GetMapping("/api/boards/{id}")
+    //    public Optional<Board> board(@PathVariable long id) {
+    //        return boardRepository.findById(id);
+    //    }
 
     //댓글 변경하기
     @PutMapping("/api/comments/{id}")

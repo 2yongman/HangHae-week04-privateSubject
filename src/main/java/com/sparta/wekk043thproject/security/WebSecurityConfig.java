@@ -40,6 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //BoardApi 허용
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/api/boards").permitAll()
+                //comment
+                .antMatchers("/api/comments/**").permitAll()
+
                 //게시글 작성 페이지 허용
                 .antMatchers("/Board/**").permitAll()
 // 그 외 어떤 요청이든 '인증'
