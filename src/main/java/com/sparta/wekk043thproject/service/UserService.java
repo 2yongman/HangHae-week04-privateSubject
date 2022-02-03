@@ -127,7 +127,6 @@ public class UserService {
                 kakaoTokenRequest,
                 String.class
         );
-
 // HTTP 응답 (JSON) -> 액세스 토큰 파싱
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -162,4 +161,10 @@ public class UserService {
 
         return new KakaoUserInfoDto(id, nickname, email);
     }
+    //아이디 중복체크
+    public boolean checkUsernameDuplicate(String username){
+        return userRepository.existsByUsername(username);
+    }
+
+
 }

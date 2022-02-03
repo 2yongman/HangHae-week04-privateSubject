@@ -37,9 +37,17 @@
                 alert('비밀번호가 맞지 않습니다.')
                 return;
             }
-            // if (confirm("회원가입을 하시겠습니까?")) {
-            //     alert("회원가입을 축하합니다")
-            //     return true;
+
+            // function checkduple() {
+            //     $.ajax({
+            //         type: "GET",
+            //         url: `/username/{username}/exists`,
+            //         success: function (response) {
+            //             if ()
+            //             alert('');
+            //             window.location.reload();
+            //         }
+            //     })
             // }
         }
 
@@ -51,6 +59,7 @@
 <div id="login-form">
     <div id="login-title">항해 5기 게시판</div>
 
+    <button th:action="@/username/{username}/exists">ID 중복 검사</button>
     <form th:action="@{/user/signup}" method="post">
         <div class="login-id-label">Username</div>
         <input type="text" name="username" id="id" placeholder="Username" class="login-input-box">

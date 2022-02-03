@@ -4,11 +4,13 @@ import com.sparta.wekk043thproject.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @RequiredArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Comment extends Timestamped{
     @GeneratedValue(strategy = GenerationType.AUTO)

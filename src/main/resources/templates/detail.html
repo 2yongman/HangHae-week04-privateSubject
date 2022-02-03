@@ -62,7 +62,7 @@
                     let id = total.id;
                     let comment = total.comment;
                     let modifiedAt = total.modifiedAt;
-                    // console.log(id, comment, modifiedAt);
+                    console.log(id, comment, modifiedAt);
                     let temp_html = `<div id="please">
                             <div>
                                 <tr>
@@ -99,10 +99,7 @@
         });
     }
 
-    //댓글 수정
-    function updatecomment(id){
-        
-    }
+    //댓글수정
 
 
     //댓글 삭제
@@ -134,8 +131,12 @@
         <tr>
             <th>용만</th>
             <th>스프링은 봄?</th>
+            <button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'> 댓글 수정
+            </button>
             <th>23:00</th>
-            <th><button>삭제</button></th>
+            <th>
+                <button>삭제</button>
+            </th>
         </tr>
     </div>
 </div>

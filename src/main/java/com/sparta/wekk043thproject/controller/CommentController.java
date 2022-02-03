@@ -30,15 +30,17 @@ public class CommentController {
         return commentRepository.findAllByCommentidOrderByCreatedAtDesc(commentid);
     }
 
-    //@GetMapping("/api/boards/{id}")
-    //    public Optional<Board> board(@PathVariable long id) {
-    //        return boardRepository.findById(id);
-    //    }
-
     //댓글 변경하기
+    //1. 댓글 조회하기
+    @GetMapping("/api/comment/{id}")
+    public Comment getComment(@PathVariable Long id) {
+        Comment comment = commentService.getComment(id);
+        return comment;
+    }
+    //2. 댓글 수정하기.
     @PutMapping("/api/comments/{id}")
     public Long updatecomment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto){
-        commentService.update(id,requestDto);
+        Comment comment = commentService.updateComment(id, requestDto);
         return id;
     }
 
